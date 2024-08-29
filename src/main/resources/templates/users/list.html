@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="html"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragment :: head"></head>
+<body>
+    <div class="containerPrincipal">
+        <div th:insert="fragments/fragment :: header"></div>
+        <div class="containerDroit">
+            <div class="enTete">
+                <h2>Utilisateur <span>(<span th:text="${users.size()}"></span>)</span></h2>
+                <ul>
+                    <a href="/users/add" class="lien-menu">
+                        <li ><img src="/fontawesome/svgs/solid/plus.svg" alt="">Nouvel utilisateur</li>
+                    </a>
+                </ul>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pseudo</th>
+                        <th>Date</th>
+                        <th style="float: inline-end;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody th:each="user : ${users}">
+                    <tr>
+
+                        <td th:text="${user.pseudo}"></td>
+                        <td th:text="${#dates.format(user.creationDate,'dd-MM-yyyy')}"></td>
+
+                        <td style="float: inline-end;">
+                            <a th:href="@{/users/{id}(id=${user.id})}" class="lien-menu">
+                                <button  style="background-color: coral;">Modifier</button>
+                            </a>                        </td>
+                    </tr>
+                   
+                </tbody>
+            </table>
+
+        </div>
+
+        
+    </div>
+</body>
+</html>

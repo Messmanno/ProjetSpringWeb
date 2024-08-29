@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="html"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragment :: head"></head>
+<body>
+    <div class="containerPrincipal">
+        <div th:insert="fragments/fragment :: header"></div>
+        <div class="containerDroit">
+            <div class="enTete">
+                <h2>Professeurs <span>(<span th:text="${teachers.size()}"></span>)</span></h2>
+                <ul>
+                    <a href="/teachers/add" class="lien-menu">
+                        <li><img src="/fontawesome/svgs/solid/plus.svg" alt="">Nouvel professeur</li>
+                    </a>
+                </ul>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Matiere</th>
+                        <th>Ville</th>
+                        <th>Telephone</th>
+
+                        <th style="float: inline-end;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody th:each="teacher : ${teachers}">
+                    <tr>
+                        <td th:text="${teacher.firstName}"></td>
+                        <td th:text="${teacher.lastName}"></td>
+                        <td th:text="${teacher.matiere}"></td>
+                        <td th:text="${teacher.ville}"></td>
+                        <td th:text="${teacher.phone}"></td>
+
+                        <td>
+                            <a th:href="@{/teachers/{id}(id = ${teacher.id} )}" class="lien-menu">
+                                <button  style="background-color: coral;">Modifier</button>
+                            </a>
+                            <button onclick="opensupp(this.dataset.id)" th:attr="data-id=${teacher.id}" style="background-color: crimson;">Supprimer</button>
+                            <div style="display: none" id="modal" class="form-delete">
+                                <form action="">
+                                    <h2 style="margin-bottom: 10px;">ATTENTION !!!</h2>
+                                    <p style="margin-bottom: 10px;">Voulez-vous supprimer cet professeur ?</p>
+                                    <hr>
+                                    <div class="response">
+                                        <button type="button" id="non" onclick="closeModal()">NON</button>
+                                        <button type="button" onclick="deleteTeacher()" id="oui">OUI</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+        <script>
+
+            var deletid = null;
+
+            function opensupp(id) {
+                deletid = id;
+                console.log(id);
+                document.getElementById("modal").style.display = "flex";
+            }
+
+            function closeModal() {
+                document.getElementById("modal").style.display = "none";
+            }
+
+            function deleteTeacher() {
+                fetch(`/teachers/delete/${deletid}`, {
+                    method: 'GET',
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload(); // Recharger la page après la suppression réussie
+                        } else {
+                            console.log("Erreur lors de la suppression");
+                        }
+                    })
+                    .catch(error => {
+                        console.log("Erreur de requête:", error);
+                    });
+            }
+
+        </script>
+        
+    </div>
+</body>
+</html>

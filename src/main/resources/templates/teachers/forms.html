@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="html"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/fragment :: head"></head>
+<body>
+    <div class="containerPrincipal">
+        <div th:insert="fragments/fragment :: header"></div>
+        <div class="containerDroit">
+            <div class="enTete">
+                <div></div>
+                <ul>
+                    <a href="/teachers" class="lien-menu">
+                        <li ><img src="/fontawesome/svgs/solid/backward.svg" alt="">Retour</li>
+                    </a>
+                </ul>
+            </div>
+            <form  th:object="${teacher}" th:action="@{/teachers}" method="post">
+                <h2 style="margin: 10px;" th:text="${teacher.id == null}?'Ajouter professeur':'Modifier professeur'" ></h2>
+
+                <input  th:field="*{id}" hidden type="text">
+
+                <div class="form-group">
+                    <input th:field="*{firstName}" type="text" id="nom" name="nom" placeholder="NOM:">
+                    <input th:field="*{lastName}" type="text" id="prenom" name="nom" placeholder="PRENOM:">
+                </div>
+                <div class="form-group">
+                    <input type="text" th:field="*{phone}" name="telephone" id="telephone" placeholder="TELEPHONE:">
+                    <select th:field="*{matiere}" id="matiere" name="matiere">
+                        <option value="Math">Math</option>
+                        <option value="Physique">Physique</option>
+                        <option value="EPS">EPS</option>
+                        <option value="Anglais">Anglais</option>
+                        <option value="SVT">SVT</option>
+                        <option value="Philosophie">Philosophie</option>
+                        <option value="Francais">Francais</option>
+                    </select>
+                </div>
+               
+                <div class="form-group group-radio" style="margin: 10px;">
+                    <div class="homme">
+                        <label>homme</label>
+                        <input th:field="*{genre}" type="radio" id="homme" name="sexe" value="true">
+                    </div>
+                    <div class="femme">
+                        <label>femme</label>
+                    <input th:field="*{genre}" type="radio" id="femme" name="sexe" value="false">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input th:field="*{ville}" type="text" name="ville" id="ville" placeholder="VILLE:">
+                    <input th:field="*{year}" type="date" name="calendrier" id="calendrier">
+                </div>
+                <div class="form-group group-button" style="margin: 10px;">
+                    <a href="/teachers" class="lien-menu">
+                        <button id="annuler">Annuler</button>
+                    </a>
+                    <button id="enregistrer" type="submit">Enregistrer</button>
+                </div>
+            </form>
+          
+        </div>
+    </div>
+</body>
+</html>

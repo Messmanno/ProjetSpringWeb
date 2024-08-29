@@ -1,0 +1,13 @@
+dropCreate supprime a la fin tandis que Create supprime et cree a chaque demarrage
+
+fort couplage et faible cohesion
+
+userServiceImpl implemente Uservice et subit une  injection de dependance de UserRepositories
+UserRepositories implementE Jpa
+Ainsi
+USERsERVICEiMPL BENEFICIE DES METHODES DE L'INTERFACE USERsERVICE ET DES MULTIPLES METHODES DE Jpa GRACE A USERrEPOSITORIE
+
+le maitre est celui qui recoit la la clé etrangère de l'esclave
+exe : User est maitre de adresse vu qu'il recoit la clé etrangère
+
+le mappedBy doit se placé dans la table esclave
